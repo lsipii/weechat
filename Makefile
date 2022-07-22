@@ -10,7 +10,10 @@ ensure-build-folders = mkdir -p ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && mkdir -p ${W
 ###
 # Usage routines
 ###
+init:
+	git submodule init && git submodule update
 build:
+	$(init)
 	docker build -t lsipii/weechat-base:${WEECHAT_VERSION} -f ./weechat-container/debian/Containerfile --build-arg VERSION=${WEECHAT_VERSION} ./weechat-container \
 		&& docker build -t lsipii/weechat:${WEECHAT_VERSION} --build-arg WEECHAT_VERSION=${WEECHAT_VERSION} .
 run: 
