@@ -40,15 +40,15 @@ install-weeslack: ensure-build-folders
 	cd ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && curl -O https://raw.githubusercontent.com/wee-slack/wee-slack/master/wee_slack.py
 link-weeslack: ensure-build-folders
 	mkdir -p ${WEECHAT_CONFIG_PATH}/python/autoload
-	ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/wee_slack.py ${WEECHAT_CONFIG_PATH}/python/wee_slack.py || echo "link exists"
-	ln -sf ../wee_slack.py ${WEECHAT_CONFIG_PATH}/python/autoload || echo "link exists"
+	[ -L ${WEECHAT_CONFIG_PATH}/python/wee_slack.py ] || ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/wee_slack.py ${WEECHAT_CONFIG_PATH}/python/wee_slack.py
+	[ -L ${WEECHAT_CONFIG_PATH}/python/autoload/wee_slack.py ] || ln -sf ../wee_slack.py ${WEECHAT_CONFIG_PATH}/python/autoload
 
 install-matrix: ensure-build-folders
 	if [ -d "${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix" ]; then rm -Rf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix; fi
 	cd ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && git clone https://github.com/poljar/weechat-matrix.git && cd weechat-matrix && python3 -m pip install -r requirements.txt
 link-matrix: ensure-build-folders
-	ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix/main.py ${WEECHAT_CONFIG_PATH}/python/matrix.py || echo "link exists"
-	ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix/matrix ${WEECHAT_CONFIG_PATH}/python/matrix || echo "link exists"
 	mkdir -p ${WEECHAT_CONFIG_PATH}/python/autoload
-	ln -sf ../matrix.py ${WEECHAT_CONFIG_PATH}/python/autoload || echo "link exists"
+	[ -L ${WEECHAT_CONFIG_PATH}/python/matrix.py ] || ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix/main.py ${WEECHAT_CONFIG_PATH}/python/matrix.py
+	[ -L ${WEECHAT_CONFIG_PATH}/python/matrix ] || ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/weechat-matrix/matrix ${WEECHAT_CONFIG_PATH}/python/matrix
+	[ -L ${WEECHAT_CONFIG_PATH}/python/autoload/matrix.py ] || ln -sf ../matrix.py ${WEECHAT_CONFIG_PATH}/python/autoload
 
