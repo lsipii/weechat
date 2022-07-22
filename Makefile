@@ -19,7 +19,7 @@ install:
 		&& docker build -t lsipii/weechat:${WEECHAT_VERSION} --build-arg WEECHAT_VERSION=${WEECHAT_VERSION} .
 run: 
 	mkdir -p ${WEECHAT_CONFIG_PATH}
-	docker run -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat lsipii/weechat
+	docker run -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat lsipii/weechat:${WEECHAT_VERSION}
 
 ###
 # Sub-install routines
