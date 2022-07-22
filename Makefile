@@ -1,10 +1,10 @@
 SHELL=/bin/bash
 
-WEECHAT_RUNTIME_DEPS_SRC_PATH = ${HOME}/src/weechat-dependencies
+# Settings
 WEECHAT_CONFIG_PATH = ${HOME}/.weechat
 WEECHAT_VERSION = "3.6"
 
-# folder ensurer script
+# util scripts
 ensure-build-folders = mkdir -p ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && mkdir -p ${WEECHAT_CONFIG_PATH}
 initialize-submodules = git submodule init && git submodule update
 
@@ -24,6 +24,8 @@ run:
 ###
 # Sub-install routines
 ###
+WEECHAT_RUNTIME_DEPS_SRC_PATH := ${HOME}/src/weechat-dependencies
+
 install-runtime: install-weeslack install-matrix
 install-links: link-weeslack link-matrix
 
