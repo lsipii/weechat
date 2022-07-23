@@ -7,12 +7,15 @@ WEECHAT_VERSION = "3.6"
 ###
 # Usage routines
 ### 
-init: initialize-submodules
 install: initialize-submodules
 	docker build -t lsipii/weechat-base:${WEECHAT_VERSION} -f ./weechat-container/debian/Containerfile --build-arg VERSION=${WEECHAT_VERSION} ./weechat-container \
 		&& docker build -t lsipii/weechat:${WEECHAT_VERSION} --build-arg WEECHAT_VERSION=${WEECHAT_VERSION} .
 run: ensure-config-folder
-	docker run -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat lsipii/weechat:${WEECHAT_VERSION}
+	docker run --name weechat -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat lsipii/weechat:${WEECHAT_VERSION}
+start: ensure-config-folder
+	docker run -d --name weechat -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat lsipii/weechat:${WEECHAT_VERSION}
+attach:
+	docker attach weechat --detach-keys="ctrl-d, "; exit 0
 
 ###
 # Container sub-install routines
