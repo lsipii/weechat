@@ -55,12 +55,14 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 #
 # install runtime libs
 #
+USER user
 COPY ./Makefile .
 RUN make install-runtime
 
 #
 # Cleanup
 #
+USER root
 RUN sh -s /home/user/.cargo/bin/rustup self uninstall -- -y
 RUN apk del ${BUILD_DEPS}
 
