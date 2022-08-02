@@ -23,7 +23,8 @@ ARG RUNTIME_DEPS="\
     olm \
     zstd \
     zstd-dev \
-    bash"
+    bash \
+    tzdata"
 
 # @see: https://github.com/wee-slack/wee-slack/issues/812
 # @see: https://github.com/poljar/weechat-matrix/issues/319#issue-1101498236
