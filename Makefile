@@ -56,7 +56,7 @@ install-links: link-weeslack link-matrix
 
 install-weeslack: ensure-build-folders
 	python -m pip install websocket-client
-	cd ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && curl -O https://raw.githubusercontent.com/wee-slack/wee-slack/xoxc-tokens/wee_slack.py
+	cd ${WEECHAT_RUNTIME_DEPS_SRC_PATH} && curl -O https://raw.githubusercontent.com/wee-slack/wee-slack/master/wee_slack.py
 link-weeslack: ensure-build-folders
 	mkdir -p ${WEECHAT_CONFIG_PATH}/python/autoload
 	[ -L ${WEECHAT_CONFIG_PATH}/python/wee_slack.py ] || ln -sf ${WEECHAT_RUNTIME_DEPS_SRC_PATH}/wee_slack.py ${WEECHAT_CONFIG_PATH}/python/wee_slack.py
