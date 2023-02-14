@@ -2,14 +2,21 @@
 
 A custom weechat-container setup
 
-Install:
+**Install:**
 
 `make install`
 
-Run: 
+**Run:**
 
 `make run`
 
 Run with custom weechat config folder (default ~/.weechat)
 
 `make run WEECHAT_CONFIG_PATH=/my/path/to/dot/weechat/`
+
+**Run as screen-like background process:**
+
+`make attach`
+
+Detach with `ctrl-d`
+

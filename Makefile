@@ -19,9 +19,9 @@ build: initialize-submodules
 run: ensure-config-folder
 	docker run -e TZ=$$(make --silent get-timezone-string) --name weechat -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat:Z lsipii/weechat:${WEECHAT_VERSION}
 start: ensure-config-folder
-	[ -z "$$(docker ps -q -f name=weechat)" ] && docker run -d -e TZ=$$(make --silent get-timezone-string) --name weechat -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat:Z lsipii/weechat:${WEECHAT_VERSION} || exit 0
+	[ -z "$$(docker ps -q -f name=weechat)" ] && docker run -dit --rm -e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix -e TZ=$$(make --silent get-timezone-string) --name weechat -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat:Z lsipii/weechat:${WEECHAT_VERSION} || exit 0
 attach: start
-	docker attach weechat --detach-keys="ctrl-d, "; exit 0
+	docker attach weechat --detach-keys="ctrl-d"; exit 0
 clean:
 	docker rm weechat || exit 0
 	docker rmi lsipii/weechat-base:${WEECHAT_VERSION} || exit 0
