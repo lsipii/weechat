@@ -2,7 +2,7 @@ SHELL=/bin/bash
 
 # Settings
 WEECHAT_CONFIG_PATH = ${HOME}/.weechat
-WEECHAT_VERSION = "3.6"
+WEECHAT_VERSION = 3.6
 
 ###
 # Usage routines
@@ -13,8 +13,8 @@ build: initialize-submodules
 	sed -i 's/FROM alpine:3.15 as base/FROM alpine:3.16 as base/' ./weechat-alpine.dockerfile
 	sed -i 's/php7/php8/g' ./weechat-alpine.dockerfile
 	sed -i 's/-u 1001 -D/-u 1000 -D/' ./weechat-alpine.dockerfile
-	docker build -t lsipii/weechat-base:${WEECHAT_VERSION} -f ./weechat-alpine.dockerfile --build-arg VERSION=${WEECHAT_VERSION} ./weechat-container \
-		&& docker build -t lsipii/weechat:${WEECHAT_VERSION} --build-arg WEECHAT_VERSION=${WEECHAT_VERSION} .
+	docker build --no-cache -t lsipii/weechat-base:${WEECHAT_VERSION} -f ./weechat-alpine.dockerfile --build-arg VERSION=${WEECHAT_VERSION} ./weechat-container \
+		&& docker build --no-cache -t lsipii/weechat:${WEECHAT_VERSION} --build-arg WEECHAT_VERSION=${WEECHAT_VERSION} .
 	rm ./weechat-alpine.dockerfile
 run: ensure-config-folder
 	docker run -e TZ=$$(make --silent get-timezone-string) --name weechat -ti --rm -v ${WEECHAT_CONFIG_PATH}:/home/user/.weechat:Z lsipii/weechat:${WEECHAT_VERSION}
@@ -50,9 +50,9 @@ run-ensure-links:
 ###
 # Runtime plugins
 ###
-install-runtime: install-weeslack install-matrix
+install-runtime: install-weeslack 
 # On runtime, ensure links to pre-installed plugins 
-install-links: link-weeslack link-matrix
+install-links: link-weeslack 
 
 install-weeslack: ensure-build-folders
 	python -m pip install websocket-client

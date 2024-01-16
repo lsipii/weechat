@@ -1,0 +1,16 @@
+version: '3'
+services:
+  weechat:
+    container_name: weechat
+    image: lsipii/weechat:3.6
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /home/lsipii/.weechat:/home/user/.weechat
+    environment:
+      - DISPLAY=host.docker.internal:0
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
